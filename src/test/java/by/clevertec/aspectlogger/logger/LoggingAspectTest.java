@@ -45,13 +45,11 @@ class LoggingAspectTest {
     public void testLogBefore() {
         when(request.getMethod()).thenReturn(HttpMethod.GET.name());
         when(request.getServletPath()).thenReturn("/path");
-        when(proceedingJoinPoint.getSignature()).thenReturn(mock(Signature.class));
 
         loggingAspect.logBefore(proceedingJoinPoint);
 
         verify(request, times(1)).getMethod();
         verify(request, times(1)).getServletPath();
-        verify(proceedingJoinPoint, times(1)).getSignature();
     }
 
     @Test

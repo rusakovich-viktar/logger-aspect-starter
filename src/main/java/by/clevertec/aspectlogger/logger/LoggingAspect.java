@@ -16,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class LoggingAspect {
 
-    @Pointcut("execution(* *..controller.*.*(..))")
+    @Pointcut("execution(* *..controller..*Controller.*(..))")
     public void controllerMethods() {
     }
 
@@ -24,7 +24,6 @@ public class LoggingAspect {
     public void logBefore(JoinPoint joinPoint) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.info("Received call :: HTTP-method [{}] with path [{}]", request.getMethod(), request.getServletPath());
-        log.info("Entering method: {}", joinPoint.getSignature().getName());
     }
 
     @AfterReturning(pointcut = "controllerMethods()", returning = "result")
