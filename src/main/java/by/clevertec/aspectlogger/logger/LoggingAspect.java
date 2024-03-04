@@ -1,5 +1,8 @@
 package by.clevertec.aspectlogger.logger;
 
+import static by.clevertec.aspectlogger.util.Constant.EXITING_METHOD_WITH_RESULT;
+import static by.clevertec.aspectlogger.util.Constant.RECEIVED_CALL_HTTP_METHOD_WITH_PATH;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -23,11 +26,11 @@ public class LoggingAspect {
     @Before("controllerMethods()")
     public void logBefore(JoinPoint joinPoint) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.info("Received call :: HTTP-method [{}] with path [{}]", request.getMethod(), request.getServletPath());
+        log.info(RECEIVED_CALL_HTTP_METHOD_WITH_PATH, request.getMethod(), request.getServletPath());
     }
 
     @AfterReturning(pointcut = "controllerMethods()", returning = "result")
     public void logAfter(JoinPoint joinPoint, Object result) {
-        log.info("Exiting method: {} with result: {}", joinPoint.getSignature().getName(), result);
+        log.info(EXITING_METHOD_WITH_RESULT, joinPoint.getSignature().getName(), result);
     }
 }
