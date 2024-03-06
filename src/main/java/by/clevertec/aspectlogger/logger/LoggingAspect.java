@@ -14,17 +14,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+/**
+ * Аспект для логирования вызовов методов контроллеров.
+ */
 @Slf4j
 @Aspect
 @Component
 public class LoggingAspect {
 
+    /**
+     * Определение Pointcut для методов контроллеров.
+     */
     @Pointcut("execution(* *..controller..*Controller.*(..))")
     public void controllerMethods() {
     }
 
+    /**
+     * Логирует информацию перед вызовом метода контроллера.
+     */
     @Before("controllerMethods()")
-    public void logBefore(JoinPoint joinPoint) {
+    public void logBefore() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         log.info(RECEIVED_CALL_HTTP_METHOD_WITH_PATH, request.getMethod(), request.getServletPath());
     }
