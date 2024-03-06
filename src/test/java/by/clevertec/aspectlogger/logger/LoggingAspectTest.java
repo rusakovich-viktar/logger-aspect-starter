@@ -46,7 +46,7 @@ class LoggingAspectTest {
         when(request.getMethod()).thenReturn(HttpMethod.GET.name());
         when(request.getServletPath()).thenReturn("/path");
 
-        loggingAspect.logBefore(proceedingJoinPoint);
+        loggingAspect.logBefore();
 
         verify(request, times(1)).getMethod();
         verify(request, times(1)).getServletPath();
